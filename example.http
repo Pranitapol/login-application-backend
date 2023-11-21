@@ -1,0 +1,13 @@
+###
+GET  http://localhost:8000/getData
+
+###
+POST http://localhost:8000/post
+Content-Type: application/json
+
+{
+    "username":"abc",
+    "email":"abc@gmail.com",
+    "password":"abc@BAC$12",
+    "confirmPassword":"abc@ABC$12"
+}
