@@ -15,47 +15,34 @@ router.get('/getdata',async(req,res)=>{
 })
 
 router.post('/post',async(req,res)=>{
-    // validateEmailAccessibility(req.body.email).then(function(result) {
-    //     console.log('exist',result);
-    //     if (result.email===req.body.email) {
-    //       console.log("Email does exist");
-    //     } else {
-    //       console.log("Email not exist");
-    //     }
-    //   });
-    signupModel.find({"email":req.body.email}).then((result)=>{
+
+    signupModel.find({"email":req.body.email}).then(async (result)=>{
         console.log(result.length);
+        // try{
         if (result.length !== 0) {
-            res.json({
-                message: 'Email already exists',
-                status: false
-            })
+            
+            res.status(400).json({message:'Email Already exists'})
         }else{
-            res.json({
-                message: 'Email does not exists',
-            }) 
+            const data= new signupModel({
+            username:req.body.username,
+            email:req.body.email,
+            password:req.body.password,
+            confirmPassword:req.body.confirmPassword
+        })
+        try{
+            const dataTosave = await data.save();
+            res.status(200).json(dataTosave)
+        }catch(err){
+            res.status(400).json({message:err.message})
         }
+        }
+    //}
+    // catch(err){
+    //     console.log(err);
+    // }
     })
-//    const data= new signupModel({
-//     username:req.body.username,
-//     email:req.body.email,
-//     password:req.body.password,
-//     confirmPassword:req.body.confirmPassword
-//    })
-//    try{
-//     const dataTosave = await data.save();
-//     res.status(200).json(dataTosave)
-//    }catch(err){
-//     res.status(400).json({message:err.message})
-//    }
+
 })
 
-function validateEmailAccessibility(email){
-
-    return signupModel.findOne({email: email}).then(function(result){
-        console.log('result',result); 
-        return result;
-    });
- }
  
 module.exports=router
