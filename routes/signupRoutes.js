@@ -44,5 +44,24 @@ router.post('/post',async(req,res)=>{
 
 })
 
+router.post('/login',async(req,res)=>{
+   
+    signupModel.findOne({'email':req.body.email}).then((result)=>{
+        if(result?.password === req.body.password && result?.email === req.body.email){
+            console.log(result);
+            res.status(200).json({message:'Login Successful...'})
+            // res.status(200).json({result})
+        }else{
+            
+            res.status(400).send({message:'Invalid credentials..'})
+        }
+   }).catch((error)=>{
+    console.log(error);
+    res.status(400).send({message:'Invalid'})
+   })
+
+    
+    
+})
  
 module.exports=router

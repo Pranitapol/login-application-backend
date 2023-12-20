@@ -11,3 +11,12 @@ Content-Type: application/json
     "password":"abc@BAC$12",
     "confirmPassword":"abc@ABC$12"
 }
+
+###
+POST http://localhost:8000/login
+Content-Type: application/json
+
+{
+   "email":"abc1@gmail.com",
+   "password":"Kolhapur@1"
+}
