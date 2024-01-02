@@ -52,12 +52,16 @@ router.post('/login',async(req,res)=>{
             res.status(200).json({message:'Login Successful...'})
             // res.status(200).json({result})
         }else{
-            
-            res.status(400).send({message:'Invalid credentials..'})
+            if(result?.email === req.body.email && result?.password !== req.body.password){
+                res.status(400).json({passwordErr:'Please enter correct Password...',message:'Invalid credentials..'})
+            }
+           else{
+            res.status(400).send({emailErr:'Please enter correct EmailId...',message:'Invalid credentials..'})
+           }
         }
    }).catch((error)=>{
     console.log(error);
-    res.status(400).send({message:'Invalid'})
+    res.status(400).send({message:'Invalid email'})
    })
 
     
