@@ -7,7 +7,7 @@ const signupSchema=new mongoose.Schema({
         type:String
     },
     password:{
-        type:String
+        type:String,
     },
     confirmPassword:{
         type:String
